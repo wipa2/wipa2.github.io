@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Works in Progress | Ann Arbor Design &amp; Maker Show</title>
+    <meta name="description" content="Works in Progress is a design show featuring local designers, makers, and artists, showcasing a wide spectrum of functional works that include fashion, graph...">
+
+    <link rel="stylesheet" href="/assets/normalize.css">
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="canonical" href="https://wipa2.show/">
+
+    <script src="assets/main.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  </head>
+
+  <body>
+
+    <header class="site-header" role="banner">
+	<img src="/assets/header.svg">
+    </header>
+
+    <div class="wrapper">
+      <p>Works in Progress is a design show featuring local designers, makers, and artists,
+         showcasing a wide spectrum of functional works that include fashion, graphic design,
+         furniture, architecture, industrial design, and more. First show appearing January, 2019.</p>
+      <h1>Submit Work</h1>
+
+      <form action="https://liveformhq.com/form/4a2985e6-ed23-45cd-a3ae-c9701689d5bf" method="POST" accept-charset="utf-8">
+        <input type="text" placeholder="Name" name="name">
+        <input type="text" placeholder="Email" name="email">
+        <input type="text" placeholder="Phone" name="phone">
+        <input type="text" placeholder="Title of Work" name="title">
+        <input type="text" placeholder="Dimensions of Work" name="dimensions">
+        <textarea placeholder="Description of Work" name="description"></textarea>
+        <input type="text" placeholder="Year Work Created" name="date_of_creation">
+        <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+        <input type="file" name="images" id="images" multiple data-multiple-caption="{count} files selected">
+        <label for="images">Photos of Work (3-5)<div></div></label> 
+        <div class="g-recaptcha" data-sitekey="6LetEnYUAAAAAPDnyfJ3DchFWtZ4KN4FVvY3NXl-"></div>
+        <input type="submit" value="Submit" class="submit">
+      </form>
+    </div>
+
+    <footer>
+      <p>Location</p>
+      <br>
+      <p>Ann Arbor Art Center</p>
+      <p>117 W. Liberty St., Ann Arbor, MI 48104</p>
+      <ul id="social">
+        <li><a href="https://twitter.com/wipa2show/"><img class="facebook" src="assets/social_half.png"></a></li>
+        <li><a href="https://instagram.com/wipa2show/"><img class="instagram" src="assets/social_half.png"></a></li>
+      </ul>
+    </footer>
+  </body>
+</html>
