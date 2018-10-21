@@ -83,6 +83,7 @@ input.submit {
     margin-right: auto;
     margin-top: 192px;
     margin-bottom: 192px;
+    background: white;
 }
 
 input.submit:focus, input.submit:hover {

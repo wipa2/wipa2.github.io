@@ -1,0 +1,12 @@
+body {
+    font-size: 25px;
+    line-height: 32px;
+}
+
+h1 {
+    font-size: 1.25em;
+}
+
+input.submit {
+    width: 100%;
+}
