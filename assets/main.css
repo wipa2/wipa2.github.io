@@ -145,3 +145,8 @@ footer ul li {
     float: left;
     margin-left: 27px;
 }
+
+div.g-recaptcha {
+    margin-top: 48px;
+    margin-left: -29px;
+}
