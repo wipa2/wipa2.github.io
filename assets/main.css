@@ -24,6 +24,10 @@ header img {
     margin-bottom: 48px;
 }
 
+.wrapper.thanks {
+    margin-bottom: 160px;
+}
+
 .wrapper p {
     text-align: left;
 }
