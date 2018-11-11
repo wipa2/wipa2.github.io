@@ -36,20 +36,13 @@ def submit(request):
     form = WorkForm({})
     context = {'form': form}
 
-    print(request.POST)
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = WorkForm(request.POST)
-        # check whether it's valid:
         valid_photos, photo_error = _valid_photos(request.FILES)
         if form.is_valid() and valid_photos:
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
             work = form.save()
             for photo in request.FILES.getlist('images'):
-                print(photo)
-                print(dir(photo))
                 image = WorkPhoto(
                     work=work,
                     work_photo=photo
