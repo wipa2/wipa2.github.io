@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Works in Progress | Ann Arbor Design &amp; Maker Show</title>
+    <meta name="description" content="Works in Progress is a design show featuring local designers, makers, and artists, showcasing a wide spectrum of functional works that include fashion, graph...">
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}normalize.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}main.css">
+    <link rel="stylesheet" media="(orientation: portrait)" href="{{ STATIC_URL }}portrait.css">
+    <link rel="canonical" href="https://wipa2.show/">
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  </head>
+
+  <body>
+
+    <header class="site-header" role="banner">
+	<img src="{{ STATIC_URL }}header.svg">
+    </header>
+
+    <div class="wrapper">
+      <p class="fullwidth"><strong>Works in Progress</strong> is a design show celebrating the journey of bringing your ideas to life.  As makers and designers, we know all about what goes on in the studio, in the workshop, and on the factory floor – behind the scenes – to create beautiful, functional works.<br><br>
+        The first installment of the <strong>Works in Progress</strong> show will take place at the Ann Arbor Art Center (January 11–February __).  This show gives designers and makers a platform to showcase the beauty and chaos involved in bringing functional works to life.  The exhibit’s curatorial scope of functional works includes fashion, graphic design, furniture, architecture, industrial design, and more. 
+        </p>
+        <h2>SUBMISSION</h2>
+        <p>
+        All entries are due by <strong>MIDNIGHT EASTERN TIME, DECEMBER 9TH, 2018</strong>.<br><br>To participate, complete the work submission form <a href="#submit">below</a>, upload your work samples, and pay the $10 submission fee. <a href="#">Terms &amp; Conditions</a>
+        </p>
+        
+        <div>
+            <p>
+                <strong>Work Samples may include:</strong>
+            </p>
+            <ul>
+                <li>Sketches and Drawings.</li> 
+                <li>Prototypes.</li>   
+                <li>Process Tools (Molds, jigs, custom equipment, etc…).</li>
+                <li>The final work.</li>
+                <li>Happy Accidents along the way.</li>
+                <li>Beautiful mistakes.</li>
+                <li>Material studies and Form studies.</li>
+                <li>All types of documentation.</li>
+            </ul>
+        </div>
+        
+        <h2>NOTIFICATIONS</h2>
+        <p class="fullwidth">Participants selected for the Works in Progress show will be responsible for transporting work to and from Ann Arbor Art Center.  All applicants will receive a response by Dec. 17th, 2018.</p>
+        
+        <h2>QUESTIONS AND ANSWERS</h2>
+        
+        <p>
+            <strong>Timeline</strong><br>
+            Submissions Open – Nov. 12<br>
+            Submissions Close – Dec. 9<br>
+            Participants Notified – Dec. 17<br>
+            Works Delivered - Jan. 6<br>
+            Show Opens - Jan. 11<br><br><br>
+            Further info will be communicated to selected participants via email.<br><br>
+        </p>
+        
+        <p>
+            <strong>Work-Related Questions</strong><br>
+            Maximum size of work?<br>
+            Bigger than a grain of rice, smaller than an elephant.<br>
+            If you’re not sure, email us at the address below.<br><br>
+            
+            <strong>Who’s organizing the show?</strong><br>
+            A handful of designers &amp; makers in SE Michigan.  Sophie, Chris, &amp; Matt<br><br>
+        </p>
+        <p class="fullwidth center">
+            <strong>Got further questions?</strong>  Email us at <a href="mailto:info@wipa2.show">info@wipa2.show</a>.
+        </p>
+      <h2 id="submit">SUBMIT WORKS</h2>
+
+      <form action="{% url 'works:submit' %}#submit" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="_utf8" value="✓">
+
+        {% load filters %}
+    
+        {% for field in form %}
+            {% if field.field.widget|isinst:"django.forms.TextInput" %}
+            <input type="text" placeholder="{{ field.label }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" {% if field.value %}value="{{ field.value }}"{% endif %}>
+            {% endif %}
+            {% if field.field.widget|isinst:"django.forms.Textarea" %}
+            <textarea placeholder="{{ field.label }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}">{% if field.value %}{{ field.value }}{% endif %}</textarea>
+            {% endif %}
+            {% if posted %}
+            {% for error in field.errors %}
+            <p class="error">{{ error|escape }}</p>
+            {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+        <input type="file" name="images" id="images" multiple data-multiple-caption="{count} files selected">
+        <label for="images">Photos of Work (3-5)<div></div></label> 
+        {% if photo_error %}
+        <p class="error">{{ photo_error|escape }}</p>
+        {% endif %}
+        <!--<div class="g-recaptcha" data-sitekey="6LetEnYUAAAAAPDnyfJ3DchFWtZ4KN4FVvY3NXl-"></div>-->
+        <input type="submit" value="Submit" class="submit">
+      </form>
+    </div>
+
+    <footer>
+      <p>Location</p>
+      <br>
+      <p>Ann Arbor Art Center</p>
+      <p>117 W. Liberty St., Ann Arbor, MI 48104</p>
+      <ul id="social">
+        <li><a href="https://twitter.com/wipa2show/"><img class="facebook" src="{{ STATIC_URL }}social_half.png"></a></li>
+        <li><a href="https://instagram.com/wipa2show/"><img class="instagram" src="{{ STATIC_URL }}social_half.png"></a></li>
+      </ul>
+    </footer>
+  </body>
+
+  <script src="{{ STATIC_URL }}main.js"></script>
+</html>

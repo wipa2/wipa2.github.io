@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Works in Progress | Ann Arbor Design &amp; Maker Show</title>
+    <meta name="description" content="Works in Progress is a design show featuring local designers, makers, and artists, showcasing a wide spectrum of functional works that include fashion, graph...">
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}normalize.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}main.css">
+    <link rel="stylesheet" media="(orientation: portrait)" href="{{ STATIC_URL }}portrait.css">
+    <link rel="canonical" href="https://wipa2.show/">
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  </head>
+
+  <body>
+
+    <div class="wrapper works_listing">
+        <h2>Works Listing</h2>
+        {% if works_list %}
+        {% for work in works_list %}
+        <p><strong>{{ work.work_title }}</strong><br>{{ work.work_description }}</p>
+        <div>
+          {% for photo in work.photo_work.all %}
+            <a href="{{ photo.work_photo.url }}"><img src="{{ photo.work_photo.url }}"></a>
+          {% endfor %}
+        </div>
+        <br>
+        {% endfor %}
+    {% else %}
+        <p class="fullwidth">No works have been submitted.</p>
+    {% endif %}
+
+    </div>
+
+  </body>
+
+  <script src="{{ STATIC_URL }}main.js"></script>
+</html>
