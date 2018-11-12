@@ -14,7 +14,7 @@
     <link rel="stylesheet" media="(orientation: portrait)" href="{{ STATIC_URL }}portrait.css">
     <link rel="canonical" href="https://wipa2.show/">
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
 
   <body>
@@ -77,7 +77,11 @@
         </p>
       <h2 id="submit">SUBMIT WORKS</h2>
 
-      <form action="{% url 'works:submit' %}#submit" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+      {% if posted %}
+      <p class="fullwidth error">Something went wrong -- please scroll down to fix it so we can process your submission!</p>
+      {% endif %}
+
+      <form id="payment-form" action="{% url 'works:submit' %}#submit" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="_utf8" value="✓">
 
@@ -103,6 +107,21 @@
         <p class="error">{{ photo_error|escape }}</p>
         {% endif %}
         <!--<div class="g-recaptcha" data-sitekey="6LetEnYUAAAAAPDnyfJ3DchFWtZ4KN4FVvY3NXl-"></div>-->
+        <div class="form-row">
+            <label for="card-element">
+                Credit or debit card
+                <p class="small">Payments processed by <a href="https://stripe.com">Stripe</a> will appear as <strong>WIPA2.SHOW</strong> on your credit card statement.<br>Card numbers are only used for processing $10 entry fee and are not stored.</a></p>
+            </label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+        
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert"></div>
+            {% if charge_error %}
+            <p class="error">{{ charge_error|escape }}</p>
+            {% endif %}
+        </div>
         <input type="submit" value="Submit" class="submit">
       </form>
     </div>

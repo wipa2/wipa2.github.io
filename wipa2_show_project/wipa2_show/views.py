@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.views import generic
 
+import stripe
+
 from .forms import WorkForm
 from .models import Work, WorkPhoto
 
@@ -41,6 +43,23 @@ def submit(request):
         form = WorkForm(request.POST)
         valid_photos, photo_error = _valid_photos(request.FILES)
         if form.is_valid() and valid_photos:
+            # Token is created using Checkout or Elements!
+            # Get the payment token ID submitted by the form:
+            token = request.POST['stripeToken']
+
+            try:
+                charge = stripe.Charge.create(
+                    amount=1000,
+                    currency='usd',
+                    description='wipa2.show submission fee',
+                    source=token,
+                )
+            except:
+                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': 'An error occurred processing your credit card.'})
+
+            if charge['status'] != 'succeeded':
+                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': charge['failure_message']})
+
             work = form.save()
             for photo in request.FILES.getlist('images'):
                 image = WorkPhoto(
