@@ -10,3 +10,7 @@ h1 {
 input.submit {
     width: 100%;
 }
+
+.wrapper {
+    width: 75%;
+}
