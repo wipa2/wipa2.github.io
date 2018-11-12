@@ -32,12 +32,14 @@ class WorksListView(generic.ListView):
 
 def submit(request):
     def _valid_photos(files):
-        if len(files) == 0:
-            return False, "No photos uploaded"
+        if len(files.getlist('images')) == 0:
+            return False, "No photos uploaded."
+        elif len(files.getlist('images')) > 5:
+            return False, "No more than 5 photos, please."
         
         for file in files.getlist('images'):
-            if file.size > 1024 * 1024 * 10: # 10 MB max size
-                return False, "Max size for photos is 10MB"
+            if file.size > 1024 * 1024 * 3.2: # 3.2MB max size
+                return False, "Max size for photos is 3.2MB each."
         
         return True, ""
 
