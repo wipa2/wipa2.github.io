@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import calendar
+import time
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.views import generic
@@ -11,9 +14,12 @@ from .forms import WorkForm
 from .models import Work, WorkPhoto
 
 
+def _in_entry_period():
+    return calendar.timegm(time.gmtime()) <= 1544417999
+
 def index(request):
     form = WorkForm({})
-    context = {'form': form}
+    context = {'form': form, 'in_entry_period': _in_entry_period()}
     return render(request, 'index.html', context)
 
 
@@ -36,13 +42,13 @@ def submit(request):
         return True, ""
 
     form = WorkForm({})
-    context = {'form': form}
+    context = {'form': form, 'in_entry_period': _in_entry_period()}
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = WorkForm(request.POST)
         valid_photos, photo_error = _valid_photos(request.FILES)
-        if form.is_valid() and valid_photos:
+        if form.is_valid() and valid_photos and _in_entry_period():
             # Token is created using Checkout or Elements!
             # Get the payment token ID submitted by the form:
             token = request.POST['stripeToken']
@@ -55,10 +61,10 @@ def submit(request):
                     source=token,
                 )
             except:
-                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': 'An error occurred processing your credit card.'})
+                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': 'An error occurred processing your credit card.', 'in_entry_period': _in_entry_period()})
 
             if charge['status'] != 'succeeded':
-                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': charge['failure_message']})
+                return render(request, 'index.html', {'posted': True, 'form': form, 'charge_error': charge['failure_message'], 'in_entry_period': _in_entry_period()})
 
             work = form.save()
             for photo in request.FILES.getlist('images'):
@@ -69,6 +75,6 @@ def submit(request):
                 image.save()
 
             return render(request, 'thanks.html')
-        return render(request, 'index.html', {'posted': True, 'form': form, 'photo_error': photo_error})
+        return render(request, 'index.html', {'posted': True, 'form': form, 'photo_error': photo_error, 'in_entry_period': _in_entry_period()})
     else:
         return render(request, 'index.html', context)
