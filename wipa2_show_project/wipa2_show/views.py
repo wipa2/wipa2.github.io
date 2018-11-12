@@ -30,6 +30,7 @@ class WorksListView(generic.ListView):
     def get_queryset(self):
         return Work.objects.all()
 
+
 def submit(request):
     def _valid_photos(files):
         if len(files.getlist('images')) == 0:
