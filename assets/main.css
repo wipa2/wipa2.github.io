@@ -233,3 +233,18 @@ a {
   p.small {
       font-size: .4356em;
   }
+
+  div.submit_prompt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: black;
+    color: white;
+    padding: 5px;
+    padding-right: 15px;
+    padding-left: 10px;
+  }
+
+  div.submit_prompt a {
+      color: white;
+  }

@@ -14,3 +14,7 @@ input.submit {
 .wrapper {
     width: 75%;
 }
+
+div.submit_prompt {
+    display: none;
+}
