@@ -165,6 +165,10 @@ footer img.facebook {
     object-position: -118px -15px;
 }
 
+footer img.twitter {
+    object-position: -218px -15px;
+}
+
 footer ul {
     height: 64px;
     margin-left: -27px;
