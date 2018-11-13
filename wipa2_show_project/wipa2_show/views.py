@@ -11,7 +11,7 @@ from django.views import generic
 import stripe
 
 from .forms import WorkForm
-from .models import Work, WorkPhoto
+from .models import Work, WorkPhoto, Designer
 
 
 def _in_entry_period():
@@ -76,6 +76,12 @@ def submit(request):
                     work_photo=photo
                 )
                 image.save()
+            
+            artist = Designer(designer_name=request.POST.get('artist_name'),
+                              designer_email=request.POST.get('artist_email'),
+                              designer_phone_number=request.POST.get('artist_phone'))
+            artist.work = work
+            artist.save()
 
             return render(request, 'thanks.html')
         return render(request, 'index.html', {'posted': True, 'form': form, 'photo_error': photo_error, 'in_entry_period': _in_entry_period()})
