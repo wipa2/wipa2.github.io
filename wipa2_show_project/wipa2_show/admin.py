@@ -24,7 +24,6 @@ class WIPAdminSite(AdminSite):
 
         urls += [
             path('works_list', self.admin_view(WorksListView.as_view()), name='works_list'),
-            # url(r'^works_list/$', self.admin_view(WorksListView))
         ]
 
         return urls

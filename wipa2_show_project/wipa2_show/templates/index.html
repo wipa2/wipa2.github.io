@@ -16,8 +16,6 @@
 
     <meta property="og:image" content="https://wipa2.nyc3.digitaloceanspaces.com/static/header.png" />
     <meta property="og:image:secure_url" content="https://wipa2.nyc3.digitaloceanspaces.com/static/header.png" />
-
-    <script src="https://js.stripe.com/v3/"></script>
   </head>
 
   <body>
@@ -112,22 +110,6 @@
         {% if photo_error %}
         <p class="error">{{ photo_error|escape }}</p>
         {% endif %}
-        <!--<div class="g-recaptcha" data-sitekey="6LetEnYUAAAAAPDnyfJ3DchFWtZ4KN4FVvY3NXl-"></div>-->
-        <div class="form-row">
-            <label for="card-element">
-                Credit or debit card
-                <p class="small">Payments processed by <a href="https://stripe.com">Stripe</a> will appear as <strong>WIPA2.SHOW</strong> on your credit card statement.<br>Card numbers are only used for processing $10 entry fee and are not stored.</a></p>
-            </label>
-            <div id="card-element">
-                <!-- A Stripe Element will be inserted here. -->
-            </div>
-        
-            <!-- Used to display form errors. -->
-            <div id="card-errors" role="alert"></div>
-            {% if charge_error %}
-            <p class="error">{{ charge_error|escape }}</p>
-            {% endif %}
-        </div>
         <input type="submit" value="Submit" class="submit">
       </form>
       {% else %}
