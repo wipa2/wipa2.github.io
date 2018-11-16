@@ -14,8 +14,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import netifaces
 
-import stripe
-
 # Find out what the IP addresses are at run time
 # This is necessary because otherwise Gunicorn will reject the connections
 def ip_addresses():
@@ -144,4 +142,4 @@ ALLOWED_HOSTS = ip_addresses() + ["localhost", "wipa2.show"]
 MEDIA_ROOT = '/tmp/wipa2_show/'
 MEDIA_URL = '/uploads/'
 
-stripe.api_key = "test_api_key"
+FILE_UPLOAD_PERMISSIONS = 0o644
