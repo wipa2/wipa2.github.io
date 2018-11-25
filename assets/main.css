@@ -258,3 +258,7 @@ a {
   div.submit_prompt a {
       color: white;
   }
+
+  .works_listing p {
+      font-size: .33em;
+  }

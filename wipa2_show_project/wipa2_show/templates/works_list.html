@@ -23,7 +23,11 @@
         <h2>Works Listing</h2>
         {% if works_list %}
         {% for work in works_list %}
-        <p><strong>{{ work.work_title }}</strong><br>{{ work.work_description }}</p>
+        <p>
+          <strong>{{ work.work_title }}</strong><br/>
+          {{ work.work_description }}<br><br>
+          {{ work.work_display_requirements }}
+        </p>
         <div>
           {% for photo in work.photo_work.all %}
             <a href="{{ photo.work_photo.url }}"><img src="{{ photo.work_photo.url }}"></a>
