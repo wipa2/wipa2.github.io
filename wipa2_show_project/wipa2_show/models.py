@@ -44,7 +44,7 @@ class WorkPhoto(models.Model):
             result = 'GIF'
         elif magic_no == b'\x50\x4b\x03\x04' or magic_no == b'\x50\x4b\x05\x06' or magic_no == b'\x50\x4b\x07\x08':
             result = 'ZIP'
-        elif magic_no == b'\xFF\xD8':
+        elif magic_no[:2] == b'\xFF\xD8':
             # not quite right but close enough for now
             result = 'JPG'
 
