@@ -32,3 +32,18 @@ class WorkPhoto(models.Model):
 
     work_photo = models.ImageField(upload_to=images_directory_path)
     work = models.ForeignKey(Work, related_name='photo_work', on_delete=models.CASCADE)
+
+    def get_type(self):
+        magic_no = self.work_photo.read(4)
+        result = 'UNKNOWN'
+        if magic_no == b'\x89\x50\x4e\x47':
+            result = 'PNG'
+        elif magic_no == b'\x25\x50\x44\x46':
+            result = 'PDF'
+        elif magic_no == b'\x47\x49\x46\x38':
+            result = 'GIF'
+        elif magic_no == b'\x50\x4b\x03\x04' or magic_no == b'\x50\x4b\x05\x06' or magic_no == b'\x50\x4b\x07\x08':
+            result = 'ZIP'
+
+        self.work_photo.seek(0)
+        return result

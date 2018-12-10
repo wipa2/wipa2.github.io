@@ -30,7 +30,11 @@
         </p>
         <div>
           {% for photo in work.photo_work.all %}
+            {% if photo.get_type == "PNG" or photo.get_type == "GIF" %}
             <a href="{{ photo.work_photo.url }}"><img src="{{ photo.work_photo.url }}"></a>
+            {% else %}
+            <a href="{{ photo.work_photo.url }}">{{ photo.get_type }}</a>
+            {% endif %}
           {% endfor %}
         </div>
         <br>
