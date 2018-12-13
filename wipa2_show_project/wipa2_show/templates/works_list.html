@@ -26,7 +26,8 @@
         <p>
           <strong>{{ work.work_title }}</strong><br/>
           {{ work.work_description }}<br><br>
-          {{ work.work_display_requirements }}
+          {{ work.work_display_requirements }}<br><br>
+          <strong>{{ work.get_designer_info.name }}</strong>
         </p>
         <div>
           {% for photo in work.photo_work.all %}

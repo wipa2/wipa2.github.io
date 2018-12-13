@@ -14,6 +14,30 @@ class Work(models.Model):
     year_regex = RegexValidator(regex=r'^\d{4}$', message="Year must be entered in YYYY format")
     work_year = models.CharField(validators=(year_regex,), max_length=4)
 
+    def get_designer(self):
+        queryset = Designer.objects.filter(work__id=self.id)
+        
+        if not queryset:
+            return None
+        else:
+            return queryset[0]
+
+    def get_designer_info(self):
+        designer = self.get_designer()
+
+        if not designer:
+            return {
+                "name": "unknown",
+                "phone": "unknown",
+                "email": "unknown",
+            }
+
+        return {
+            "name": designer.designer_name,
+            "phone": designer.designer_phone_number,
+            "email": designer.designer_email,
+        }
+
 class Designer(models.Model):
     designer_name = models.CharField(max_length=200)
     designer_email = models.EmailField()
@@ -34,7 +58,11 @@ class WorkPhoto(models.Model):
     work = models.ForeignKey(Work, related_name='photo_work', on_delete=models.CASCADE)
 
     def get_type(self):
-        magic_no = self.work_photo.read(4)
+        try:
+            magic_no = self.work_photo.read(4)
+        except FileNotFoundError:
+            return 'MISSING FILE'
+
         result = 'UNKNOWN'
         if magic_no == b'\x89\x50\x4e\x47':
             result = 'PNG'
