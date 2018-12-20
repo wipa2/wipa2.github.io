@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import netifaces
 
+import stripe
+
 # Find out what the IP addresses are at run time
 # This is necessary because otherwise Gunicorn will reject the connections
 def ip_addresses():
@@ -143,3 +145,11 @@ MEDIA_ROOT = '/tmp/wipa2_show/'
 MEDIA_URL = '/uploads/'
 
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+EMAIL_HOST = ''
+EMAIL_PORT = 1
+EMAIL_HOST_USER = 'wipa2.show@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_SSL = True
+
+stripe.api_key = ''

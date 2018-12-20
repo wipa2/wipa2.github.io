@@ -8,4 +8,5 @@ app_name = 'works'
 urlpatterns = [
     path('', views.index, name='index'),
     path('submit', views.submit, name='submit'),
+    path('exhibit', views.exhibit, name='exhibit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

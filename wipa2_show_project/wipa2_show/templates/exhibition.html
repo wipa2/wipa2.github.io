@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Works in Progress | Ann Arbor Design &amp; Maker Show | WIP 2019</title>
+    <meta name="description" content="Works in Progress (WIP) is a design show for functional works. Taking place at Ann Arbor Art Center 2019">
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}normalize.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}main.css">
+    <link rel="stylesheet" media="(orientation: portrait)" href="{{ STATIC_URL }}portrait.css">
+    <link rel="canonical" href="https://wipa2.show/">
+
+    <meta property="og:image" content="https://wipa2.nyc3.digitaloceanspaces.com/static/header.png" />
+    <meta property="og:image:secure_url" content="https://wipa2.nyc3.digitaloceanspaces.com/static/header.png" />
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129314028-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-129314028-1');
+    </script>
+  </head>
+
+  <body>
+
+    <header class="site-header" role="banner">
+	<img src="{{ STATIC_URL }}header.svg">
+    </header>
+
+    <div class="wrapper">
+      <p class="fullwidth"><strong>Congratulations!</strong> Yay, you've been accepted to present at <strong>Works in Progress 2019!</strong> We just need a few more things (and your exhibition fee) and you'll be on your way!</p>
+
+      <h2 id="submit">EXHIBITION DETAILS</h2>
+
+      {% if posted %}
+      <p class="fullwidth error">Something went wrong -- please scroll down to fix it so we can process your submission!</p>
+      {% endif %}
+
+      <form id="payment-form" action="{% url 'works:exhibit' %}#submit" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="_utf8" value="✓">
+
+        {% load filters %}
+    
+        {% for field in form %}
+            {% if field.field.widget|isinst:"django.forms.TextInput" %}
+            <input type="text" placeholder="{{ field.label }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" {% if field.value %}value="{{ field.value }}"{% endif %}>
+            {% endif %}
+            {% if field.field.widget|isinst:"django.forms.Textarea" %}
+            <textarea placeholder="{{ field.label }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}">{% if field.value %}{{ field.value }}{% endif %}</textarea>
+            {% endif %}
+            {% if posted %}
+            {% for error in field.errors %}
+            <p class="error">{{ error|escape }}</p>
+            {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+        <input type="file" name="images" id="images" multiple data-multiple-caption="{count} files selected">
+        <label for="images">Photos of Work (3-5)<div></div></label> 
+        <p>These are for the <strong>press release</strong> and other promotional materials. Please submit the best-looking, highest-resolution photos you have.</p>
+        {% if photo_error %}
+        <p class="error">{{ photo_error|escape }}</p>
+        {% endif %}
+
+        <div class="form-row">	
+            <label for="card-element">	
+                Credit or debit card	
+                <p class="small">Payments processed by <a href="https://stripe.com">Stripe</a> will appear as <strong>WIPA2.SHOW</strong> on your credit card statement.<br>Card numbers are only used for processing $20 exhibition fee and are not stored.</a></p>	
+            </label>	
+            <div id="card-element">	
+                <!-- A Stripe Element will be inserted here. -->	
+            </div>	
+
+             <!-- Used to display form errors. -->	
+            <div id="card-errors" role="alert"></div>	
+            {% if charge_error %}	
+            <p class="error">{{ charge_error|escape }}</p>	
+            {% endif %}	
+        </div>	
+
+        <input type="submit" value="Submit" class="submit">
+      </form>
+    </div>
+
+    <footer>
+      <p>Location</p>
+      <br>
+      <p><a href="https://www.annarborartcenter.org/">Ann Arbor Art Center</a></p>
+      <p>117 W. Liberty St., Ann Arbor, MI 48104</p>
+      <ul id="social">
+        <li><a href="https://twitter.com/wipa2show/"><img class="twitter" src="{{ STATIC_URL }}social_half.png"></a></li>
+        <li><a href="https://instagram.com/wipa2show/"><img class="instagram" src="{{ STATIC_URL }}social_half.png"></a></li>
+      </ul>
+    </footer>
+  </body>
+
+  <script src="{{ STATIC_URL }}main.js"></script>
+</html>

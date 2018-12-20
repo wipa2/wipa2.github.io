@@ -5,7 +5,31 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 
-from .models import Work
+from .models import Work, ExhibitionConfirmation
+
+class ExhibitionForm(forms.ModelForm):
+    class Meta:
+        model = ExhibitionConfirmation
+        fields = [
+            'artist_name',
+            'artist_email',
+            'artist_phone',
+            'exhibition_names',
+            'exhibition_statement',
+            'artist_bio',
+            'installation_instructions',
+        ]
+
+    artist_name = forms.CharField(label='Name', max_length=200)
+    artist_email = forms.CharField(label='Email', max_length=200)
+    phone_regex = RegexValidator(regex=r'^(\+?\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$',
+                                 message="Invalid phone number.")
+    artist_phone = forms.CharField(label='Phone', max_length=20, validators=[phone_regex])
+    exhibition_names = forms.CharField(label='Name of Work(s)', max_length=2500, widget=forms.Textarea, required=False)
+    exhibition_statement = forms.CharField(label='Description of Work(s)', max_length=2500, widget=forms.Textarea, required=False)
+    artist_bio = forms.CharField(label='Artist Bio', max_length=2500, widget=forms.Textarea)
+    installation_instructions = forms.CharField(label='Installation Instructions', max_length=2500, widget=forms.Textarea)
+
 
 class WorkForm(forms.ModelForm):
     class Meta:
