@@ -60,7 +60,7 @@ def exhibit(request):
                 charge = stripe.Charge.create(	
                     amount=2000,	
                     currency='usd',	
-                    description='wipa2.show exhibition fee',	
+                    description=f'wipa2.show exhibition fee -- {form.cleaned_data['artist_email']}',	
                     source=token,	
                 )	
             except Exception as e:	
